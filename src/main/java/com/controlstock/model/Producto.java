@@ -6,18 +6,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name="Ubicacion")
-public class Ubicacion {
-   @Id
-   @GeneratedValue(strategy=GenerationType.AUTO)
-   private Long id;
-   
+@Table(name="Producto")
+public class Producto {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
 	@Column
-	private String codUbicacion;
+	private String codProducto;
 
 }

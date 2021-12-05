@@ -19,5 +19,5 @@ spring:
       path: /h2_console
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
