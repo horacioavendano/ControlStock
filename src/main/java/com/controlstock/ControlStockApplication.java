@@ -10,6 +10,7 @@ import com.controlstock.model.Producto;
 import com.controlstock.model.Ubicacion;
 import com.controlstock.repositories.DepositoRepository;
 import com.controlstock.repositories.ProductoRepository;
+import com.controlstock.repositories.StockRepository;
 import com.controlstock.repositories.UbicacionRepository;
 
 @SpringBootApplication
@@ -27,6 +28,9 @@ public class ControlStockApplication implements CommandLineRunner{
 	
 	@Autowired
 	private UbicacionRepository ubicacionRepository;
+	
+	@Autowired
+	private StockRepository stockRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -70,6 +74,21 @@ public class ControlStockApplication implements CommandLineRunner{
 		Ubicacion ubi3 = new Ubicacion();
 		ubi3.setCodUbicacion("AL-00-00-DE");
 		ubicacionRepository.save(ubi3);
+		
+		//Stock INICIAL
+		/*
+		 * Stock stock = new Stock(); stock.setDeposito(depo1);
+		 * stock.setUbicacion(ubi1); stock.setProducto(prod1); stock.setCantidad(10L);
+		 * stockRepository.save(stock);
+		 * 
+		 * Stock stock2 = new Stock(); stock2.setDeposito(depo2);
+		 * stock2.setUbicacion(ubi2); stock2.setProducto(prod2);
+		 * stock2.setCantidad(20L); stockRepository.save(stock2);
+		 * 
+		 * Stock stock3 = new Stock(); stock3.setDeposito(depo3);
+		 * stock3.setUbicacion(ubi3); stock3.setProducto(prod3);
+		 * stock3.setCantidad(1000L); stockRepository.save(stock3);
+		 */
 		
 	}
 }

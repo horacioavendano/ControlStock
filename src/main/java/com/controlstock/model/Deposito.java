@@ -11,22 +11,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="Deposito")
+@Table(name = "Deposito")
 public class Deposito {
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long  id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@Column
 	private String codDeposito;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 }
