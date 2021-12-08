@@ -19,5 +19,5 @@ public class Deposito {
 
 	@Column
 	private String codDeposito;
-
+	
 }

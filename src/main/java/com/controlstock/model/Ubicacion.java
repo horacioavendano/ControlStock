@@ -11,13 +11,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="Ubicacion")
+@Table(name = "Ubicacion")
 public class Ubicacion {
-   @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   private Long id;
-   
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@Column
 	private String codUbicacion;
-	
+
 }

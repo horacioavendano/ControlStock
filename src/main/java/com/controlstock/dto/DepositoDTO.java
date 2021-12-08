@@ -2,12 +2,13 @@ package com.controlstock.dto;
 
 import java.io.Serializable;
 
-import com.controlstock.customValidator.EnDeposito;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
+
 @Data
-public class ProductoDTO implements Serializable {
+public class DepositoDTO implements Serializable {
 
 	/**
 	 * 
@@ -16,7 +17,7 @@ public class ProductoDTO implements Serializable {
 
 	private Long id;
 
-	@EnDeposito
-	private String codProducto;
+	@NotEmpty
+	private String codDeposito;
 
 }
