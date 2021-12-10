@@ -1,12 +1,11 @@
 package com.controlstock.model;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -15,23 +14,27 @@ import lombok.Data;
 @Entity
 @Table(name = "Stock")
 public class Stock {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@EmbeddedId
+	private StockKey id = new StockKey();
 
+	@MapsId("depositoId")
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(insertable = false, updatable = false)
 	private Deposito deposito;
 
+	@MapsId("ubicacionId")
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(insertable = false, updatable = false)
 	private Ubicacion ubicacion;
 
+	@MapsId("productoId")
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(insertable = false, updatable = false)
 	private Producto producto;
 
 	@Column
 	private Long cantidad;
 
 }
+
+
