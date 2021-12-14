@@ -1,6 +1,7 @@
 package com.controlstock.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -45,27 +46,73 @@ public class StockServiceImpl implements StockService {
 		ubicacion.setId(ubicacionDTO.getId());
 		stock.setUbicacion(ubicacion);
 
+		stock.setCantidad(stockDTO.getCantidad());
+
+		Optional<Stock> optionalStock = this.buscarProducto(stock);
+
+		if (optionalStock.isPresent()) {
+			// Update
+			Stock stockDb = optionalStock.get();
+			Long cantStock = stockDb.getCantidad() + stock.getCantidad();
+			stockDb.setCantidad(cantStock);
+			stockRepository.save(stockDb);
+		} else {
+
+			stockDTO = null;
+		}
+
+		return stockDTO;
+	}
+
+	@Override
+	public StockDTO retirarProductos(StockDTO stockDTO) {
+
+		Stock stock = new Stock();
+		Producto producto = new Producto();
+		Deposito deposito = new Deposito();
+		Ubicacion ubicacion = new Ubicacion();
+
+		// TODO cambiar con ModelMapper
+		ProductoDTO productoDTO = stockDTO.getProducto();
+		producto.setId(productoDTO.getId());
+		stock.setProducto(producto);
+
+		DepositoDTO depositoDTO = stockDTO.getDeposito();
+		deposito.setId(depositoDTO.getId());
+		stock.setDeposito(deposito);
+
+		UbicacionDTO ubicacionDTO = stockDTO.getUbicacion();
+		ubicacion.setId(ubicacionDTO.getId());
+		stock.setUbicacion(ubicacion);
+
+		stock.setCantidad(stockDTO.getCantidad());
+
+		Optional<Stock> optionalStock = this.buscarProducto(stock);
+
+		if (optionalStock.isPresent()) {
+			// Update
+			Stock stockDb = optionalStock.get();
+			Long cantStock = stockDb.getCantidad() - stock.getCantidad();
+			stockDb.setCantidad(cantStock);
+			stockRepository.save(stockDb);
+		} else {
+
+			stockDTO = null;
+		}
+
+		return stockDTO;
+	}
+
+	private Optional<Stock> buscarProducto(Stock stock) {
 		StockKey key = new StockKey();
-		key.setDepositoId(depositoDTO.getId());
-		key.setUbicacionId(ubicacionDTO.getId());
-		key.setProductoId(productoDTO.getId());
+		key.setDepositoId(stock.getDeposito().getId());
+		key.setUbicacionId(stock.getUbicacion().getId());
+		key.setProductoId(stock.getProducto().getId());
 
 		Stock stockABuscar = new Stock();
 		stockABuscar.setId(key);
 
-		List<Stock> stockList = stockRepository.findAll(Example.of(stockABuscar));
-		if (!stockList.isEmpty()) {
-			//Update
-			Stock stockDb = stockList.get(0);
-			Long cantStock = stockDb.getCantidad() + stockDTO.getCantidad();
-			stockDb.setCantidad(cantStock);
-			stockRepository.save(stockDb);
-		} else {
-			stock.setCantidad(stockDTO.getCantidad());
-			stockRepository.save(stock);
-		}
-		
-		return stockDTO;
+		return stockRepository.findOne(Example.of(stockABuscar));
 	}
 
 //	@Override

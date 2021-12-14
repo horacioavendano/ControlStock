@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +21,29 @@ public class StockController {
 	@Autowired
 	private StockService stockService;
 
-	@PostMapping("/producto-ubicacion")
+	@PutMapping("/ingresar-productos")
 	public ResponseEntity<StockDTO> ingresarProductoDeposito(@Valid @RequestBody StockDTO stock) {
-		
-		return new ResponseEntity<StockDTO>(stockService.ingresarProductoDeposito(stock), HttpStatus.CREATED);
+		StockDTO stockDTO = stockService.ingresarProductoDeposito(stock);
+		if (stockDTO != null) {
+
+			return new ResponseEntity<StockDTO>(HttpStatus.CREATED);
+		} else {
+
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+	}
+
+	@PutMapping("/retirar-productos")
+	public ResponseEntity<StockDTO> retirarProducto(@Valid @RequestBody StockDTO stock) {
+
+		StockDTO stockDTO = stockService.retirarProductos(stock);
+		if (stockDTO != null) {
+
+			return new ResponseEntity<StockDTO>(HttpStatus.CREATED);
+		} else {
+
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
 	}
 
 }
