@@ -13,7 +13,7 @@ public class DepositoDTO implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6625710056224080665L;
 
 	private Long id;
 

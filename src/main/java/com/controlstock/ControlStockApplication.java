@@ -62,6 +62,10 @@ public class ControlStockApplication implements CommandLineRunner {
 		Producto prod3 = new Producto();
 		prod3.setCodProducto("MLA333333333");
 		productoRepository.save(prod3);
+		
+		Producto prod4 = new Producto();
+		prod4.setCodProducto("MLA44444444");
+		productoRepository.save(prod4);
 
 		// Ubicaciones
 		Ubicacion ubi1 = new Ubicacion();
@@ -83,11 +87,18 @@ public class ControlStockApplication implements CommandLineRunner {
 		stock.setProducto(prod1);
 		stock.setCantidad(10L);
 		stockRepository.save(stock);
-
+		
+		Stock stock4 = new Stock();
+		stock4.setDeposito(depo1);
+		stock4.setUbicacion(ubi1);
+		stock4.setProducto(prod2);
+		stock4.setCantidad(10L);
+		stockRepository.save(stock4);
+		
 		Stock stock2 = new Stock();
-		stock2.setDeposito(depo2);
-		stock2.setUbicacion(ubi2);
-		stock2.setProducto(prod2);
+		stock2.setDeposito(depo1);
+		stock2.setUbicacion(ubi1);
+		stock2.setProducto(prod3);
 		stock2.setCantidad(20L);
 		stockRepository.save(stock2);
 
@@ -95,7 +106,7 @@ public class ControlStockApplication implements CommandLineRunner {
 		stock3.setDeposito(depo3);
 		stock3.setUbicacion(ubi3);
 		stock3.setProducto(prod3);
-		stock3.setCantidad(1000L);
+		stock3.setCantidad(50L);
 		stockRepository.save(stock3);
 
 	}

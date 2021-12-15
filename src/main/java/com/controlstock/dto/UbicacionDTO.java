@@ -12,7 +12,7 @@ public class UbicacionDTO implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4348289662329196138L;
 
 	private Long id;
 
