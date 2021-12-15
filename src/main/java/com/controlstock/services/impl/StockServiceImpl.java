@@ -1,5 +1,6 @@
 package com.controlstock.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.controlstock.dto.DepositoDTO;
 import com.controlstock.dto.ProductoDTO;
+import com.controlstock.dto.ProductoResponseDTO;
 import com.controlstock.dto.StockDTO;
 import com.controlstock.dto.UbicacionDTO;
+import com.controlstock.dto.UbicacionResponseDTO;
 import com.controlstock.model.Deposito;
 import com.controlstock.model.Producto;
 import com.controlstock.model.Stock;
@@ -115,11 +118,38 @@ public class StockServiceImpl implements StockService {
 		return stockRepository.findOne(Example.of(stockABuscar));
 	}
 
-//	@Override
-//	public List<StockDTO> listarStockProductos(DepositoDTO deposito, UbicacionDTO ubicacion) {
-//		// TODO Auto-generated method stub
-//		stockRepository.findAll(Example.of(deposito));
-//		return null;
-//	}
+	@Override
+	public List<ProductoResponseDTO> listarProductosStock(Long depositoId, Long ubicacionId) {
+		List<Stock> listStock = stockRepository.listarProductosStock(depositoId, ubicacionId);
+
+		// TODO agregar automapper
+		List<ProductoResponseDTO> listProductoDTO = new ArrayList<ProductoResponseDTO>();
+		for (Stock stock : listStock) {
+			ProductoResponseDTO productoDTO = new ProductoResponseDTO();
+			productoDTO.setId(stock.getProducto().getId());
+			productoDTO.setCodProducto(stock.getProducto().getCodProducto());
+			productoDTO.setCantidadSock(stock.getCantidad());
+			listProductoDTO.add(productoDTO);
+		}
+
+		return listProductoDTO;
+	}
+	
+	@Override
+	public List<UbicacionResponseDTO> listarUbicacionesStock(Long depositoId, Long productoId) {
+		List<Stock> listStock = stockRepository.listarUbicacionesStock(depositoId, productoId);
+
+		// TODO agregar automapper
+		List<UbicacionResponseDTO> listUbicacionDTO = new ArrayList<UbicacionResponseDTO>();
+		for (Stock stock : listStock) {
+			UbicacionResponseDTO ubicacionResponseDTO = new UbicacionResponseDTO();
+			ubicacionResponseDTO.setId(stock.getProducto().getId());
+			ubicacionResponseDTO.setCodUbicacion(stock.getProducto().getCodProducto());
+			ubicacionResponseDTO.setCantidadStock(stock.getCantidad());
+			listUbicacionDTO.add(ubicacionResponseDTO);
+		}
+
+		return listUbicacionDTO;
+	}
 
 }

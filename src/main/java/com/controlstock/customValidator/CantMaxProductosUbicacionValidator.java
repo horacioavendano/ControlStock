@@ -1,6 +1,5 @@
 package com.controlstock.customValidator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintValidator;

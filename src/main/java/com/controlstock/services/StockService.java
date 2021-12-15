@@ -2,17 +2,18 @@ package com.controlstock.services;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
-import com.controlstock.dto.DepositoDTO;
+import com.controlstock.dto.ProductoResponseDTO;
 import com.controlstock.dto.StockDTO;
-import com.controlstock.dto.UbicacionDTO;
+import com.controlstock.dto.UbicacionResponseDTO;
 
 public interface StockService {
 
 	public StockDTO ingresarProductoDeposito(StockDTO stock);
 
 	public StockDTO retirarProductos(StockDTO stock);
+	
+	public List<ProductoResponseDTO> listarProductosStock(Long depositoId, Long ubicacionId);
+
+	public List<UbicacionResponseDTO> listarUbicacionesStock(Long depositoId, Long productoId);
 	 
-	 //public List<StockDTO> listarStockProductos(DepositoDTO deposito, UbicacionDTO ubicacion);
 }
