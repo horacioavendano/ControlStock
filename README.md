@@ -1,6 +1,6 @@
 # ControlStock
 Challenge ML Control Stock
-
+----------------------------------------------------------------------------------------------------------------------------------
 Pasos para probar 
 
 1- Instalar H2 y levantar proyecto
