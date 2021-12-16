@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -67,27 +69,11 @@ public class StockServiceImpl implements StockService {
 
 	public StockDTO ingresarProductoDeposito(StockDTO stockDTO) {
 		try {
-			Stock stock = new Stock();
-			Producto producto = new Producto();
-			Deposito deposito = new Deposito();
-			Ubicacion ubicacion = new Ubicacion();
+			ModelMapper modelMapper = new ModelMapper();
+			modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		    Stock stock =modelMapper.map(stockDTO, Stock.class);
 
-			// TODO cambiar con ModelMapper
-			ProductoDTO productoDTO = stockDTO.getProducto();
-			producto.setId(productoDTO.getId());
-			stock.setProducto(producto);
-
-			DepositoDTO depositoDTO = stockDTO.getDeposito();
-			deposito.setId(depositoDTO.getId());
-			stock.setDeposito(deposito);
-
-			UbicacionDTO ubicacionDTO = stockDTO.getUbicacion();
-			ubicacion.setId(ubicacionDTO.getId());
-			stock.setUbicacion(ubicacion);
-
-			stock.setCantidad(stockDTO.getCantidad());
-
-			Stock stock1 = stockRepository.save(stock);
+			stockRepository.save(stock);
 			
 		} catch (Exception e) {
 			stockDTO = null;
@@ -99,25 +85,9 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public StockDTO retirarProductos(StockDTO stockDTO) {
 
-		Stock stock = new Stock();
-		Producto producto = new Producto();
-		Deposito deposito = new Deposito();
-		Ubicacion ubicacion = new Ubicacion();
-
-		// TODO cambiar con ModelMapper
-		ProductoDTO productoDTO = stockDTO.getProducto();
-		producto.setId(productoDTO.getId());
-		stock.setProducto(producto);
-
-		DepositoDTO depositoDTO = stockDTO.getDeposito();
-		deposito.setId(depositoDTO.getId());
-		stock.setDeposito(deposito);
-
-		UbicacionDTO ubicacionDTO = stockDTO.getUbicacion();
-		ubicacion.setId(ubicacionDTO.getId());
-		stock.setUbicacion(ubicacion);
-
-		stock.setCantidad(stockDTO.getCantidad());
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+	    Stock stock =modelMapper.map(stockDTO, Stock.class);
 
 		Optional<Stock> optionalStock = this.buscarProducto(stock);
 
