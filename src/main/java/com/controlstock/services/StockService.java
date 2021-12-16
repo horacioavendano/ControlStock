@@ -9,6 +9,8 @@ import com.controlstock.dto.UbicacionResponseDTO;
 public interface StockService {
 
 	public StockDTO ingresarProductoDeposito(StockDTO stock);
+	
+	public StockDTO actualizarProductoDeposito(StockDTO stock);
 
 	public StockDTO retirarProductos(StockDTO stock);
 	

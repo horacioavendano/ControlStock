@@ -29,7 +29,7 @@ public class StockServiceImpl implements StockService {
 	private StockRepository stockRepository;
 
 	@Override
-	public StockDTO ingresarProductoDeposito(StockDTO stockDTO) {
+	public StockDTO actualizarProductoDeposito(StockDTO stockDTO) {
 
 		Stock stock = new Stock();
 		Producto producto = new Producto();
@@ -54,13 +54,42 @@ public class StockServiceImpl implements StockService {
 		Optional<Stock> optionalStock = this.buscarProducto(stock);
 
 		if (optionalStock.isPresent()) {
-			// Update
 			Stock stockDb = optionalStock.get();
 			Long cantStock = stockDb.getCantidad() + stock.getCantidad();
 			stockDb.setCantidad(cantStock);
 			stockRepository.save(stockDb);
 		} else {
+			stockDTO = null;
+		}
 
+		return stockDTO;
+	}
+
+	public StockDTO ingresarProductoDeposito(StockDTO stockDTO) {
+		try {
+			Stock stock = new Stock();
+			Producto producto = new Producto();
+			Deposito deposito = new Deposito();
+			Ubicacion ubicacion = new Ubicacion();
+
+			// TODO cambiar con ModelMapper
+			ProductoDTO productoDTO = stockDTO.getProducto();
+			producto.setId(productoDTO.getId());
+			stock.setProducto(producto);
+
+			DepositoDTO depositoDTO = stockDTO.getDeposito();
+			deposito.setId(depositoDTO.getId());
+			stock.setDeposito(deposito);
+
+			UbicacionDTO ubicacionDTO = stockDTO.getUbicacion();
+			ubicacion.setId(ubicacionDTO.getId());
+			stock.setUbicacion(ubicacion);
+
+			stock.setCantidad(stockDTO.getCantidad());
+
+			Stock stock1 = stockRepository.save(stock);
+			
+		} catch (Exception e) {
 			stockDTO = null;
 		}
 
@@ -134,7 +163,7 @@ public class StockServiceImpl implements StockService {
 
 		return listProductoDTO;
 	}
-	
+
 	@Override
 	public List<UbicacionResponseDTO> listarUbicacionesStock(Long depositoId, Long productoId) {
 		List<Stock> listStock = stockRepository.listarUbicacionesStock(depositoId, productoId);
