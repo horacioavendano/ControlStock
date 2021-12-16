@@ -10,17 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import com.controlstock.dto.DepositoDTO;
-import com.controlstock.dto.ProductoDTO;
 import com.controlstock.dto.ProductoResponseDTO;
 import com.controlstock.dto.StockDTO;
-import com.controlstock.dto.UbicacionDTO;
 import com.controlstock.dto.UbicacionResponseDTO;
-import com.controlstock.model.Deposito;
-import com.controlstock.model.Producto;
 import com.controlstock.model.Stock;
 import com.controlstock.model.StockKey;
-import com.controlstock.model.Ubicacion;
 import com.controlstock.repositories.StockRepository;
 import com.controlstock.services.StockService;
 
@@ -33,25 +27,9 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public StockDTO actualizarProductoDeposito(StockDTO stockDTO) {
 
-		Stock stock = new Stock();
-		Producto producto = new Producto();
-		Deposito deposito = new Deposito();
-		Ubicacion ubicacion = new Ubicacion();
-
-		// TODO cambiar con ModelMapper
-		ProductoDTO productoDTO = stockDTO.getProducto();
-		producto.setId(productoDTO.getId());
-		stock.setProducto(producto);
-
-		DepositoDTO depositoDTO = stockDTO.getDeposito();
-		deposito.setId(depositoDTO.getId());
-		stock.setDeposito(deposito);
-
-		UbicacionDTO ubicacionDTO = stockDTO.getUbicacion();
-		ubicacion.setId(ubicacionDTO.getId());
-		stock.setUbicacion(ubicacion);
-
-		stock.setCantidad(stockDTO.getCantidad());
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		Stock stock = modelMapper.map(stockDTO, Stock.class);
 
 		Optional<Stock> optionalStock = this.buscarProducto(stock);
 
@@ -71,10 +49,10 @@ public class StockServiceImpl implements StockService {
 		try {
 			ModelMapper modelMapper = new ModelMapper();
 			modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		    Stock stock =modelMapper.map(stockDTO, Stock.class);
+			Stock stock = modelMapper.map(stockDTO, Stock.class);
 
 			stockRepository.save(stock);
-			
+
 		} catch (Exception e) {
 			stockDTO = null;
 		}
@@ -87,7 +65,7 @@ public class StockServiceImpl implements StockService {
 
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-	    Stock stock =modelMapper.map(stockDTO, Stock.class);
+		Stock stock = modelMapper.map(stockDTO, Stock.class);
 
 		Optional<Stock> optionalStock = this.buscarProducto(stock);
 
