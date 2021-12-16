@@ -9,3 +9,5 @@ Pasos para probar
 
 3- Esquema DB
 
+![image](https://user-images.githubusercontent.com/57541171/146436229-d7a8a602-8826-4836-9fb9-12e2206cab51.png)
+
